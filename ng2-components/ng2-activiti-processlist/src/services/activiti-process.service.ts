@@ -43,6 +43,19 @@ export class ActivitiProcessService {
             .catch(err => this.handleError(err));
     }
 
+    /**
+     * Retrieve deployed apps details by id
+     * @param appId - number - optional - The id of app
+     * @returns {Observable<any>}
+     */
+    getApplicationDetailsById(appId?: number): Observable<any> {
+        return Observable.fromPromise(this.apiService.getInstance().activiti.appsApi.getAppDefinitions())
+            .map((response: any) => {
+                return response.data.find(p => p.id === appId);
+            })
+            .catch(err => this.handleError(err));
+    }
+
     getProcessInstances(requestNode: ProcessFilterRequestRepresentation): Observable<ProcessInstance[]> {
         return Observable.fromPromise(this.apiService.getInstance().activiti.processApi.getProcessInstances(requestNode))
             .map((res: any) => {
