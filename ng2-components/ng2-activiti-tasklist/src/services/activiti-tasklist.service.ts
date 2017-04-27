@@ -50,6 +50,18 @@ export class ActivitiTaskListService {
     }
 
     /**
+     * Retrieve Deployed App details by appId
+     * @returns {Observable<any>}
+     */
+    getApplicationDetailsById(appId: number): Observable<any> {
+        return Observable.fromPromise(this.apiService.getInstance().activiti.appsApi.getAppDefinitions())
+            .map((response: any) => {
+                return response.data.find(p => p.id === appId);
+            })
+            .catch(err => this.handleError(err));
+    }
+
+    /**
      * Retrieve all the Tasks filters
      * @returns {Observable<any>}
      */
